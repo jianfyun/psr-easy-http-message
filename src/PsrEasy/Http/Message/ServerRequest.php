@@ -54,17 +54,6 @@ class ServerRequest extends Request implements ServerRequestInterface
     protected $attributes = [];
 
     /**
-     * __construct 
-     * 
-     * @access public
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->uri = new Uri($_SERVER['REQUEST_URI']);
-    }
-
-    /**
      * Retrieves all message header values.
      *
      * @access public
