@@ -54,6 +54,36 @@ class ServerRequest extends Request implements ServerRequestInterface
     protected $attributes = [];
 
     /**
+     * Retrieves the HTTP method of the request.
+     * 
+     * @access public
+     * @return string Returns the request method.
+     */
+    public function getMethod()
+    {
+        if ('' == $this->method) {
+            $this->withMethod($_SERVER['REQUEST_METHOD']);
+        }
+
+        return parent::getMethod();
+    }
+
+    /**
+     * Retrieves the URI instance.
+     * 
+     * @access public
+     * @return UriInterface Returns a UriInterface instance representing the URI of the request.
+     */
+    public function getUri()
+    {
+        if (null == $this->uri) {
+            $this->withUri(new Uri($_SERVER['REQUEST_URI']));
+        }
+
+        return parent::getUri();
+    }
+
+    /**
      * Retrieves all message header values.
      *
      * @access public
