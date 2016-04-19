@@ -54,103 +54,18 @@ class ServerRequest extends Request implements ServerRequestInterface
     protected $attributes = [];
 
     /**
-     * Retrieves the HTTP method of the request.
+     * __construct 
      * 
      * @access public
-     * @return string Returns the request method.
+     * @return void
      */
-    public function getMethod()
+    public function __construct()
     {
-        if ('' == $this->method) {
+        if (isset($_SERVER['REQUEST_METHOD'])) {
             $this->withMethod($_SERVER['REQUEST_METHOD']);
-        }
-
-        return parent::getMethod();
-    }
-
-    /**
-     * Retrieves the URI instance.
-     * 
-     * @access public
-     * @return UriInterface Returns a UriInterface instance representing the URI of the request.
-     */
-    public function getUri()
-    {
-        if (null == $this->uri) {
             $this->withUri(new Uri($_SERVER['REQUEST_URI']));
-        }
-
-        return parent::getUri();
-    }
-
-    /**
-     * Retrieves all message header values.
-     *
-     * @access public
-     * @return array Returns an associative array of the message's headers.
-     *               Each key is a header name, and each value is an array of
-     *               strings for that header.
-     */
-    public function getHeaders()
-    {
-        if (empty($this->headers)) {
             $this->parseHeaders();
         }
-
-        return parent::getHeaders();
-    }
-
-    /**
-     * Checks if a header exists by the given case-insensitive name.
-     *
-     * @param  string $name Case-insensitive header field name.
-     * @access public
-     * @return bool   Returns true if any header names match the given header
-     *                     name using a case-insensitive string comparison. Returns false if
-     *                     no matching header name is found in the message.
-     */
-    public function hasHeader($name)
-    {
-        if (empty($this->headers)) {
-            $this->parseHeaders();
-        }
-
-        return parent::hasHeader($name);
-    }
-
-    /**
-     * Retrieves a message header value by the given case-insensitive name.
-     *
-     * @param  string $name Case-insensitive header field name.
-     * @access public
-     * @return array  An array of string values as provided for the given.
-     *                     If the header does not appear in the message, this method return an empty array.
-     */
-    public function getHeader($name)
-    {
-        if (empty($this->headers)) {
-            $this->parseHeaders();
-        }
-
-        return parent::getHeader($name);
-    }
-
-    /**
-     * Retrieves a comma-separated string of the values for a single header.
-     *
-     * @param  string $name Case-insensitive header field name.
-     * @access public
-     * @return string A string of values as provided for the given header
-     *                     concatenated together using a comma. If the header does not appear in
-     *                     the message, this method return an empty string.
-     */
-    public function getHeaderLine($name)
-    {
-        if (empty($this->headers)) {
-            $this->parseHeaders();
-        }
-
-        return parent::getHeaderLine($name);
     }
 
     /**
@@ -269,6 +184,8 @@ class ServerRequest extends Request implements ServerRequestInterface
 
             if (strpos($contentType, 'application/json') !== false) {
                 return json_decode((string) $this->body, true);
+            } elseif (strpos($contentType, 'application/xml') !== false) {
+                return simplexml_load_string((string) $this->body);
             }
         }
 
