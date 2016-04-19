@@ -2,9 +2,13 @@
     "name": "psr-easy/http-message",
     "description": "Simple http message implementation of PSR-3",
     "keywords": ["PSR-3", "Http", "Message"],
+    "version": "0.1.0",
     "type": "library",
     "require": {
         "php": ">=5.5",
+        "ext-SPL": "*",
+        "ext-json": "*",
+        "ext-SimpleXML": "*",
         "psr/http-message": "~1.0"
     },
     "require-dev": {
