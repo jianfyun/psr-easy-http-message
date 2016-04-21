@@ -153,7 +153,7 @@ class Message implements MessageInterface
         } elseif (is_string($value)) {
             $replace = [$value];
         } else {
-            throw new \InvalidArgumentException('value must be string or array, the input is ' . gettype($value));
+            throw new \InvalidArgumentException('Value must be string or array, the input is ' . gettype($value));
         }
 
         $this->headers[strtolower($name)][$name] = $replace;
@@ -179,7 +179,7 @@ class Message implements MessageInterface
         } elseif (is_string($value)) {
             $append = [$value];
         } else {
-            throw new \InvalidArgumentException('header value must be string or array, the input is ' . gettype($value));
+            throw new \InvalidArgumentException('Header value must be string or array, the input is ' . gettype($value));
         }
 
         $lower = strtolower($name);

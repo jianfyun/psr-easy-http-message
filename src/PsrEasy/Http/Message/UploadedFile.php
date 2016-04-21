@@ -51,7 +51,7 @@ class UploadedFile implements UploadedFileInterface
     public function getStream()
     {
         if ($this->hasMoved) {
-            throw new \RuntimeException("{$this->fileInfo['name']} has already been moved");
+            throw new \RuntimeException("File {$this->fileInfo['name']} has already been moved");
         }
 
         return new Stream($this->fileInfo['tmp_name'], 'r');
@@ -70,15 +70,15 @@ class UploadedFile implements UploadedFileInterface
     public function moveTo($targetPath)
     {
         if ($this->hasMoved) {
-            throw new \RuntimeException("{$this->fileInfo['name']} has already been moved");
+            throw new \RuntimeException("File {$this->fileInfo['name']} has already been moved");
         }
 
         if (!is_uploaded_file($this->fileInfo['tmp_name'])) {
-            throw new \RuntimeException("{$this->fileInfo['name']} is not uploaded file");
+            throw new \RuntimeException("File {$this->fileInfo['name']} is not uploaded file");
         }
 
         if (!move_uploaded_file($this->fileInfo['tmp_name'], $targetPath)) {
-            throw new \RuntimeException("moving file {$this->fileInfo['name']} to {$targetPath} fails");
+            throw new \RuntimeException("Moving file {$this->fileInfo['name']} to {$targetPath} fails");
         }
 
         $hasMoved = true;

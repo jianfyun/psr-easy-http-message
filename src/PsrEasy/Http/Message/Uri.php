@@ -52,7 +52,7 @@ class Uri implements UriInterface
             $this->components = parse_url($rawUri);
 
             if ($this->components === false) {
-                throw new \InvalidArgumentException("rawUri is malformed, the input is $rawUri");
+                throw new \InvalidArgumentException("The rawUri is malformed, the input is $rawUri");
             }
         }
 
@@ -241,7 +241,7 @@ class Uri implements UriInterface
         $scheme = strtolower($scheme);
 
         if ($scheme != 'http' && $scheme != 'https') {
-            throw new \InvalidArgumentException("scheme only accept http or https, the input is $scheme");
+            throw new \InvalidArgumentException("Scheme only accept http or https, the input is $scheme");
         }
 
         $this->components['scheme'] = $scheme;
@@ -278,7 +278,7 @@ class Uri implements UriInterface
     public function withHost($host)
     {
         if (!preg_match('/^[\w-]+(\.[\w-]+)+$/', $host)) {
-            throw new \InvalidArgumentException("only accept valid hostname, the input is $host");
+            throw new \InvalidArgumentException("Only accept valid hostname, the input is $host");
         }
 
         $this->components['host'] = $host;
@@ -295,13 +295,13 @@ class Uri implements UriInterface
     public function withPort($port)
     {
         if (!is_numeric($port) || $port != intval($port)) {
-            throw new \InvalidArgumentException("only accept number for port, the input is $port");
+            throw new \InvalidArgumentException("Only accept number for port, the input is $port");
         }
 
         $port = intval($port);
 
         if ($port < self::MIN_TCP_PORT || $port > self::MAX_TCP_PORT) {
-            throw new \InvalidArgumentException("port exceed valid range, the input is $port");
+            throw new \InvalidArgumentException("Port exceed valid range, the input is $port");
         }
 
         $this->components['port'] = $port;
@@ -333,7 +333,7 @@ class Uri implements UriInterface
     public function withQuery($query)
     {
         if ($query[0] == '?') {
-            throw new \InvalidArgumentException("query can not start with ?, the input is $port");
+            throw new \InvalidArgumentException("Query can not start with ?, the input is $port");
         }
 
         $this->components['query'] = $query;
@@ -350,7 +350,7 @@ class Uri implements UriInterface
     public function withFragment($fragment)
     {
         if ($fragment[0] == '#') {
-            throw new \InvalidArgumentException("fragment can not start with #, the input is $port");
+            throw new \InvalidArgumentException("Fragment can not start with #, the input is $port");
         }
 
         $this->components['fragment'] = $fragment;

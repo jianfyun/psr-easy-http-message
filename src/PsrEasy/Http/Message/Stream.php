@@ -53,7 +53,7 @@ class Stream implements StreamInterface
         $this->resource = fopen($name, $mode);
 
         if ($this->resource === false) {
-            throw new \RuntimeException("open string $name error");
+            throw new \RuntimeException("Open string $name error");
         }
     }
 
@@ -126,7 +126,7 @@ class Stream implements StreamInterface
         $position = ftell($this->resource);
 
         if ($position === false) {
-            throw new \RuntimeException('find the current position of the string');
+            throw new \RuntimeException('Find the current position of the string');
         }
 
         return $position;
@@ -173,7 +173,7 @@ class Stream implements StreamInterface
     public function seek($offset, $whence = SEEK_SET)
     {
         if (fseek($this->resource, $offset, $whence) == -1) {
-            throw new \RuntimeException("seek {$this->name} to $offset error");
+            throw new \RuntimeException("Seek {$this->name} to $offset error");
         }
     }
 
@@ -187,7 +187,7 @@ class Stream implements StreamInterface
     public function rewind()
     {
         if (!rewind($this->resource)) {
-            throw new \RuntimeException("rewind string {$this->name} error");
+            throw new \RuntimeException("Rewind string {$this->name} error");
         }
     }
 
@@ -218,7 +218,7 @@ class Stream implements StreamInterface
         $length = fwrite($this->resource, $bytes);
 
         if ($length === false) {
-            throw new \RuntimeException("write string {$this->name} error");
+            throw new \RuntimeException("Write string {$this->name} error");
         }
 
         return $length;
@@ -252,7 +252,7 @@ class Stream implements StreamInterface
         $bytes = fread($this->resource, $length);
 
         if ($bytes === false) {
-            throw new \RuntimeException("read string {$this->name} error");
+            throw new \RuntimeException("Read string {$this->name} error");
         }
 
         return $bytes;
@@ -270,7 +270,7 @@ class Stream implements StreamInterface
         $remainder = stream_get_contents($this->resource);
 
         if ($remainder === false) {
-            throw new \RuntimeException("read the remainder of stream {$this->name} error");
+            throw new \RuntimeException("Read the remainder of stream {$this->name} error");
         }
 
         return $remainder;

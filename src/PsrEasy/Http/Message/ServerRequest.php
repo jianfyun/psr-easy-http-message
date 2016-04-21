@@ -155,7 +155,7 @@ class ServerRequest extends Request implements ServerRequestInterface
 
         foreach ($leaves as $leaf) {
             if (!$leaf instanceof UploadedFileInterface) {
-                throw new \InvalidArgumentException('invalid structure of $uploadedFiles');
+                throw new \InvalidArgumentException('Invalid structure of $uploadedFiles');
             }
         }
 

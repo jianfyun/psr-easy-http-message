@@ -91,10 +91,10 @@ class Request extends Message implements RequestInterface
     public function withMethod($method)
     {
         $upper   = strtoupper($method);
-        $allowed = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'TRACE', 'CONNECT'];
+        $allowed = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'TRACE', 'CONNECT', 'OPTIONS'];
 
         if (!in_array($upper, $allowed)) {
-            throw new \InvalidArgumentException("invalid http method: $method");
+            throw new \InvalidArgumentException("Invalid http method: $method");
         }
 
         $this->method = $method;
