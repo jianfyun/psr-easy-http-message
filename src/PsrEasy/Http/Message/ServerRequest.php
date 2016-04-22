@@ -64,7 +64,14 @@ class ServerRequest extends Request implements ServerRequestInterface
         if (isset($_SERVER['REQUEST_METHOD'])) {
             $this->withMethod($_SERVER['REQUEST_METHOD']);
             $this->withUri(new Uri($_SERVER['REQUEST_URI']));
+
             $this->parseHeaders();
+
+            $method = $this->getMethod();
+
+            if ($method == 'POST' || $method == 'PUT') {
+                $this->withBody(new Stream('php://input', 'r'));
+            }
         }
     }
 
