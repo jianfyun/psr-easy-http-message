@@ -182,21 +182,35 @@ class ServerRequest extends Request implements ServerRequestInterface
             return $this->data;
         }
 
-        if ('POST' == strtoupper($this->getMethod())) {
-            if (!empty($_POST)) {
-                return $_POST;
-            }
+        $method = $this->getMethod();
 
-            $contentType = $this->getHeaderLine('Content-Type');
-
-            if (strpos($contentType, 'application/json') !== false) {
-                return json_decode((string) $this->body, true);
-            } elseif (strpos($contentType, 'application/xml') !== false) {
-                return simplexml_load_string((string) $this->body);
-            }
+        if ('POST' != $method && 'PUT' != $method) {
+            return null;
         }
 
-        return null;
+        $contentType = $this->getHeaderLine('Content-Type');
+
+        if (strpos($contentType, 'application/json') !== false) {
+            $this->data = json_decode((string) $this->body, true);
+
+            if (false === $this->data) {
+                throw new \RuntimeException('Parse JSON body error: ' . json_last_error_msg());
+            }
+        } elseif (strpos($contentType, 'application/xml') !== false) {
+            $this->data = simplexml_load_string((string) $this->body);
+
+            if (false === $this->data) {
+                throw new \RuntimeException('Parse XML body error');
+            }
+        } elseif (!empty($_POST)) {
+            $this->data = $_POST;
+        }
+
+        if (empty($this->data)) {
+            $this->data = [];
+        }
+
+        return $this->data;
     }
 
     /**
