@@ -7,9 +7,9 @@ use Psr\Http\Message\StreamInterface;
 /**
  * HTTP message instance, for both HTTP request and HTTP response
  *
- * @uses MessageInterface
+ * @uses    MessageInterface
  * @package PsrEasy\Http\Message
- * @see http://www.php-fig.org/psr/psr-7/
+ * @see     http://www.php-fig.org/psr/psr-7/
  */
 class Message implements MessageInterface
 {
@@ -68,9 +68,8 @@ class Message implements MessageInterface
      * Retrieves all message header values.
      *
      * @access public
-     * @return array Returns an associative array of the message's headers.
-     *               Each key is a header name, and each value is an array of
-     *               strings for that header.
+     * @return string[][] Returns an associative array of the message's headers. Each key is a header name, and each
+     *                    value is an array of strings for that header.
      */
     public function getHeaders()
     {
@@ -88,9 +87,8 @@ class Message implements MessageInterface
      *
      * @param  string $name Case-insensitive header field name.
      * @access public
-     * @return bool   Returns true if any header names match the given header
-     *                     name using a case-insensitive string comparison. Returns false if
-     *                     no matching header name is found in the message.
+     * @return bool   Returns true if any header names match the given header name using a case-insensitive string
+     *                      comparison. Returns false if no matching header name is found in the message.
      */
     public function hasHeader($name)
     {
@@ -102,13 +100,13 @@ class Message implements MessageInterface
      *
      * @param  string $name Case-insensitive header field name.
      * @access public
-     * @return array  An array of string values as provided for the given header.
-     *                     If the header does not appear in the message, this method return an empty array.
+     * @return string[]  An array of string values as provided for the given header. If the header does not appear in
+     *                      the message, this method return an empty array.
      */
     public function getHeader($name)
     {
         $header = [];
-        $lower  = strtolower($name);
+        $lower = strtolower($name);
 
         if (empty($this->headers[$lower])) {
             return $header;
@@ -126,9 +124,8 @@ class Message implements MessageInterface
      *
      * @param  string $name Case-insensitive header field name.
      * @access public
-     * @return string A string of values as provided for the given header
-     *                     concatenated together using a comma. If the header does not appear in
-     *                     the message, this method return an empty string.
+     * @return string A string of values as provided for the given header concatenated together using a comma. If the
+     *                      header does not appear in the message, this method return an empty string.
      */
     public function getHeaderLine($name)
     {
@@ -138,8 +135,8 @@ class Message implements MessageInterface
     /**
      * Return an instance with the provided value replacing the specified header.
      *
-     * @param  string                    $name  Case-insensitive header field name.
-     * @param  string|array              $value Header value(s).
+     * @param  string          $name  Case-insensitive header field name.
+     * @param  string|string[] $value Header value(s).
      * @access public
      * @return self
      * @throws \InvalidArgumentException for invalid header names or values.
@@ -149,6 +146,11 @@ class Message implements MessageInterface
         $replace = [];
 
         if (is_array($value)) {
+            foreach ($value as $line) {
+                if (!is_string($line)) {
+                    throw new \InvalidArgumentException('Value is not array of string, the bad item is ' . $line);
+                }
+            }
             $replace = $value;
         } elseif (is_string($value)) {
             $replace = [$value];
@@ -163,8 +165,8 @@ class Message implements MessageInterface
     /**
      * Return an instance with the specified header appended with the given value.
      *
-     * @param  string                    $name  Case-insensitive header field name to add.
-     * @param  string|array              $value Header value(s).
+     * @param  string          $name  Case-insensitive header field name to add.
+     * @param  string|string[] $value Header value(s).
      * @access public
      * @return self
      * @throws \InvalidArgumentException for invalid header names.
@@ -175,6 +177,11 @@ class Message implements MessageInterface
         $append = [];
 
         if (is_array($value)) {
+            foreach ($value as $line) {
+                if (!is_string($line)) {
+                    throw new \InvalidArgumentException('Value is not array of string, the bad item is ' . $line);
+                }
+            }
             $append = $value;
         } elseif (is_string($value)) {
             $append = [$value];
@@ -224,7 +231,7 @@ class Message implements MessageInterface
     /**
      * Return an instance with the specified message body.
      *
-     * @param  StreamInterface           $body Body.
+     * @param  StreamInterface $body Body.
      * @access public
      * @return self
      * @throws \InvalidArgumentException When the body is not valid.
