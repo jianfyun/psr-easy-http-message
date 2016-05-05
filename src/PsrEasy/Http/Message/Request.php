@@ -7,10 +7,10 @@ use Psr\Http\Message\UriInterface;
 /**
  * HTTP request message instance, especially for an outgoing, client-side request.
  *
- * @uses Message
- * @uses Psr\Http\Message\RequestInterface
+ * @uses    Message
+ * @uses    Psr\Http\Message\RequestInterface
  * @package PsrEasy\Http\Message
- * @see http://www.php-fig.org/psr/psr-7/
+ * @see     http://www.php-fig.org/psr/psr-7/
  */
 class Request extends Message implements RequestInterface
 {
@@ -51,7 +51,7 @@ class Request extends Message implements RequestInterface
                 return '/';
             }
 
-            return (string) $this->uri;
+            return (string)$this->uri;
         }
 
         return $this->target;
@@ -90,7 +90,7 @@ class Request extends Message implements RequestInterface
      */
     public function withMethod($method)
     {
-        $upper   = strtoupper($method);
+        $upper = strtoupper($method);
         $allowed = ['GET', 'POST', 'HEAD', 'PUT', 'DELETE', 'TRACE', 'CONNECT', 'OPTIONS'];
 
         if (!in_array($upper, $allowed)) {
@@ -105,7 +105,7 @@ class Request extends Message implements RequestInterface
      * Retrieves the URI instance.
      *
      * @access public
-     * @return Psr\Http\Message\UriInterface Returns a UriInterface instance representing the URI of the request.
+     * @return UriInterface Returns a UriInterface instance representing the URI of the request.
      */
     public function getUri()
     {
@@ -115,8 +115,8 @@ class Request extends Message implements RequestInterface
     /**
      * Returns an instance with the provided URI.
      *
-     * @param  Psr\Http\Message\UriInterface $uri          New request URI to use.
-     * @param  bool                          $preserveHost Preserve the original state of the Host header.
+     * @param  UriInterface $uri          New request URI to use.
+     * @param  bool         $preserveHost Preserve the original state of the Host header.
      * @access public
      * @return self
      */
