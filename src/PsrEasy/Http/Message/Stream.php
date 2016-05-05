@@ -6,9 +6,9 @@ use Psr\Http\Message\StreamInterface;
 /**
  * HTTP data stream instance
  *
- * @uses Psr\Http\Message\StreamInterface
+ * @uses    Psr\Http\Message\StreamInterface
  * @package PsrEasy\Http\Message
- * @see http://www.php-fig.org/psr/psr-7/
+ * @see     http://www.php-fig.org/psr/psr-7/
  */
 class Stream implements StreamInterface
 {
@@ -39,17 +39,17 @@ class Stream implements StreamInterface
     /**
      * __construct
      *
-     * @see http://www.php.net/manual/en/function.fopen.php
+     * @see    http://www.php.net/manual/en/function.fopen.php
      * @param  string $name Stream name, file name or URI
      * @param  string $mode Access mode.
      * @access public
      * @return void
-     * @throw \RuntimeException if open stream error.
+     * @throw  \RuntimeException if open stream error.
      */
     public function __construct($name, $mode)
     {
-        $this->name     = $name;
-        $this->mode     = $mode;
+        $this->name = $name;
+        $this->mode = $mode;
         $this->resource = fopen($name, $mode);
 
         if ($this->resource === false) {
@@ -65,7 +65,10 @@ class Stream implements StreamInterface
      */
     public function __toString()
     {
-        rewind($this->resource);
+        if ($this->isSeekable()) {
+            rewind($this->resource);
+        }
+
         return stream_get_contents($this->resource);
     }
 
@@ -110,8 +113,7 @@ class Stream implements StreamInterface
             return ($bytes === false) ? null : $bytes;
         }
 
-        rewind($this->resource);
-        return strlen(stream_get_contents($this->resource));
+        return strlen((string)$this);
     }
 
     /**
@@ -163,9 +165,9 @@ class Stream implements StreamInterface
     /**
      * Seek to a position in the stream.
      *
-     * @see http://www.php.net/manual/en/function.fseek.php
-     * @param  int               $offset Stream offset.
-     * @param  int               $whence Specifies how the cursor position will be calculated based on the seek offset.
+     * @see    http://www.php.net/manual/en/function.fseek.php
+     * @param  int $offset Stream offset.
+     * @param  int $whence Specifies how the cursor position will be calculated based on the seek offset.
      * @access public
      * @return void
      * @throws \RuntimeException on failure.
@@ -209,7 +211,7 @@ class Stream implements StreamInterface
     /**
      * Write data to the stream.
      *
-     * @param  string  $bytes The string that is to be written.
+     * @param  string $bytes The string that is to be written.
      * @access public
      * @return Returns the number of bytes written to the stream.
      */
@@ -242,7 +244,7 @@ class Stream implements StreamInterface
     /**
      * Read data from the stream.
      *
-     * @param  int               $length Read up to $length bytes from the object and return them.
+     * @param  int $length Read up to $length bytes from the object and return them.
      * @access public
      * @return string            Returns the data read from the stream, or an empty string if no bytes are available.
      * @throws \RuntimeException if an error occurs.
@@ -279,8 +281,8 @@ class Stream implements StreamInterface
     /**
      * Get stream metadata as an associative array or retrieve a specific key.
      *
-     * @see http://php.net/manual/en/function.stream-get-meta-data.php
-     * @param  string           $key Specific metadata to retrieve.
+     * @see    http://php.net/manual/en/function.stream-get-meta-data.php
+     * @param  string $key          Specific metadata to retrieve.
      * @access public
      * @return array|mixed|null Returns an associative array if no key is provided.
      *                              Returns a specific key value if a key is provided and the value is found,
