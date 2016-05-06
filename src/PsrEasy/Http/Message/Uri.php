@@ -6,9 +6,9 @@ use Psr\Http\Message\UriInterface;
 /**
  * HTTP URI instance.
  *
- * @uses Psr\Http\Message\UriInterface
+ * @uses    Psr\Http\Message\UriInterface
  * @package PsrEasy\Http\Message
- * @see http://www.php-fig.org/psr/psr-7/
+ * @see     http://www.php-fig.org/psr/psr-7/
  */
 class Uri implements UriInterface
 {
@@ -44,7 +44,7 @@ class Uri implements UriInterface
      * @param  string $rawUri Raw URI string
      * @access public
      * @return void
-     * @throw \InvalidArgumentException if an error occurs.
+     * @throw  \InvalidArgumentException if an error occurs.
      */
     public function __construct($rawUri = '')
     {
@@ -270,7 +270,7 @@ class Uri implements UriInterface
     /**
      * Return an instance with the specified host.
      *
-     * @param  string                    $host The hostname to use with the new instance.
+     * @param  string $host The hostname to use with the new instance.
      * @access public
      * @return self
      * @throws \InvalidArgumentException for invalid hostnames.
@@ -311,7 +311,7 @@ class Uri implements UriInterface
     /**
      * Return an instance with the specified path.
      *
-     * @param  string                    $path The path to use with the new instance.
+     * @param  string $path The path to use with the new instance.
      * @access public
      * @return self
      * @throws \InvalidArgumentException for invalid paths.
@@ -325,7 +325,7 @@ class Uri implements UriInterface
     /**
      * Return an instance with the specified query string.
      *
-     * @param  string                    $query The query string to use with the new instance.
+     * @param  string $query The query string to use with the new instance.
      * @access public
      * @return self
      * @throws \InvalidArgumentException for invalid query strings.
@@ -365,12 +365,12 @@ class Uri implements UriInterface
      */
     public function __toString()
     {
-        $uri       = '';
-        $scheme    = $this->getScheme();
+        $uri = '';
+        $scheme = $this->getScheme();
         $authority = $this->getAuthority();
-        $path      = $this->getPath();
-        $query     = $this->getQuery();
-        $fragment  = $this->getFragment();
+        $path = $this->getPath();
+        $query = $this->getQuery();
+        $fragment = $this->getFragment();
 
         if ($scheme != '') {
             $uri .= "{$scheme}:";

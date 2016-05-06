@@ -7,9 +7,10 @@ use Psr\Http\Message\UploadedFileInterface;
 /**
  * HTTP request message instance, especially for an incoming, server-side HTTP request.
  *
- * @uses Request
- * @uses Psr\Http\Message\ServerRequestInterface
+ * @uses    Request
+ * @uses    Psr\Http\Message\ServerRequestInterface
  * @package PsrEasy\Http\Message
+ * @see     http://www.php-fig.org/psr/psr-7/
  */
 class ServerRequest extends Request implements ServerRequestInterface
 {
@@ -54,8 +55,8 @@ class ServerRequest extends Request implements ServerRequestInterface
     protected $attributes = [];
 
     /**
-     * __construct 
-     * 
+     * __construct
+     *
      * @access public
      * @return void
      */
@@ -70,7 +71,7 @@ class ServerRequest extends Request implements ServerRequestInterface
             if ($method == 'POST' || $method == 'PUT') {
                 $input = new Stream('php://input', 'r');
                 $memory = new Stream('php://memory', 'rw');
-                $memory->write((string) $input);
+                $memory->write((string)$input);
                 $memory->rewind();
                 $this->withBody($memory);
             }
@@ -193,13 +194,13 @@ class ServerRequest extends Request implements ServerRequestInterface
         $contentType = $this->getHeaderLine('Content-Type');
 
         if (strpos($contentType, 'application/json') !== false) {
-            $this->data = json_decode((string) $this->body, true);
+            $this->data = json_decode((string)$this->body, true);
 
             if (false === $this->data) {
                 throw new \RuntimeException('Parse JSON body error: ' . json_last_error_msg());
             }
         } elseif (strpos($contentType, 'application/xml') !== false) {
-            $this->data = simplexml_load_string((string) $this->body);
+            $this->data = simplexml_load_string((string)$this->body);
 
             if (false === $this->data) {
                 throw new \RuntimeException('Parse XML body error');
@@ -331,7 +332,7 @@ class ServerRequest extends Request implements ServerRequestInterface
 
         foreach ($_SERVER as $key => $value) {
             if (substr($key, 0, 5) == 'HTTP_') {
-                $name  = substr($key, 5);
+                $name = substr($key, 5);
                 $words = explode('_', $name);
 
                 foreach ($words as &$word) {

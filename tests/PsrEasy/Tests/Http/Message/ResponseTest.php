@@ -14,22 +14,22 @@ class ResponseTest extends \PHPUnit_Framework_TestCase
 
     public function testGetStatusCode()
     {
-        $this->assertEquals(200, $this->response->getStatusCode());
+        $this->assertEquals(Response::HTTP_OK, $this->response->getStatusCode());
     }
 
     public function testWithStatus()
     {
-        $status = 400;
+        $status = Response::HTTP_BAD_REQUEST;
         $phrase = 'Bad Request';
         $this->assertEquals($this->response, $this->response->withStatus($status));
-        $this->assertEquals(400, $this->response->getStatusCode());
+        $this->assertEquals(Response::HTTP_BAD_REQUEST, $this->response->getStatusCode());
         $this->assertEquals($phrase, $this->response->getReasonPhrase());
     }
 
     public function getReasonPhrase()
     {
         $this->assertEquals('', $this->response->getReasonPhrase());
-        $status = 400;
+        $status = Response::HTTP_BAD_REQUEST;
         $phrase = 'Bad Request';
         $this->assertEquals($this->response, $this->response->withStatus($status, $phrase));
         $this->assertEquals($phrase, $this->response->getReasonPhrase());

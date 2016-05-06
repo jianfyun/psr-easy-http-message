@@ -1,13 +1,15 @@
 <?php
 namespace PsrEasy\Http\Message;
 
+use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UploadedFileInterface;
 
 /**
  * UploadedFile
  *
- * @uses Psr\Http\Message\UploadedFileInterface
+ * @uses    Psr\Http\Message\UploadedFileInterface
  * @package PsrEasy\Http\Message
+ * @see     http://www.php-fig.org/psr/psr-7/
  */
 class UploadedFile implements UploadedFileInterface
 {
@@ -30,7 +32,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * __construct
      *
-     * @see http://php.net/manual/en/features.file-upload.post-method.php
+     * @see    http://php.net/manual/en/features.file-upload.post-method.php
      * @param  array $fileInfo One uploaded file item in $_FILES.
      * @access public
      * @return void
@@ -44,7 +46,7 @@ class UploadedFile implements UploadedFileInterface
      * Retrieve a stream representing the uploaded file.
      *
      * @access public
-     * @return Psr\Http\Message\StreamInterface Stream representation of the uploaded file.
+     * @return StreamInterface Stream representation of the uploaded file.
      * @throws \RuntimeException                in cases when no stream is available.
      * @throws \RuntimeException                in cases when no stream can be created.
      */
@@ -60,7 +62,7 @@ class UploadedFile implements UploadedFileInterface
     /**
      * Move the uploaded file to a new location.
      *
-     * @param  string                    $targetPath Path to which to move the uploaded file.
+     * @param  string $targetPath Path to which to move the uploaded file.
      * @access public
      * @return void
      * @throws \InvalidArgumentException if the $path specified is invalid.
